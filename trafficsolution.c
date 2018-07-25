@@ -23,7 +23,6 @@ short roadsArray[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 //the outgoingRoads array is cleared immediately after the corresponding values are stored in roadsArray
 //the conflicts counter is reset after every completed DFS of the implicit tree and the conflict number for that round
 //is stored
-//add enums - when passed in, ABCD represent certain roads and when returned they represent other roads
 
 void convertLettersToRoadNames(intersection i){
     if(outgoingRoads[0] == A)
@@ -58,7 +57,7 @@ void clearOutgoingRoads() {
     }
 }
 
-void threeWayIntersection(road a, enum road b, enum road c, short option){
+void threeWayIntersection(road a, road b, road c, short option){
     switch (option){
         case 1:
             threeWayOption1(a, b, c);
@@ -85,7 +84,7 @@ void threeWayIntersection(road a, enum road b, enum road c, short option){
     }
 }
 
-void fourWayIntersection(enum road a, enum road b, enum road c, enum road d, short option){
+void fourWayIntersection(road a, road b, road c, road d, short option){
     switch(option){
         case 1:
             fourWayOption1(a, b, c, d);
@@ -125,7 +124,7 @@ void threeWayConflicts(int num){
     conflicts += num;
 }
 
-void threeWayOption1(enum road a, enum road b, enum road c) {
+void threeWayOption1(road a, road b, road c) {
     if (c == C && b == B && a == A)
         threeWayConflicts (2);
     else {
@@ -147,7 +146,7 @@ void threeWayOption1(enum road a, enum road b, enum road c) {
     return;
 }
 
-void threeWayOption2(enum road a, enum road b, enum road c) {
+void threeWayOption2(road a, road b, road c) {
     if (c == C && b == B && a == A)
         threeWayConflicts (2);
     else {
@@ -168,7 +167,7 @@ void threeWayOption2(enum road a, enum road b, enum road c) {
     return;
 }
 
-void threeWayOption3(enum road a, enum road b, enum road c) {
+void threeWayOption3(road a, road b, road c) {
     if (c == C && b == B && a == A)
         threeWayConflicts (2);
     else {
@@ -190,7 +189,7 @@ void threeWayOption3(enum road a, enum road b, enum road c) {
     return;
 }
 
-void threeWayOption4(enum road a, enum road b, enum road c){
+void threeWayOption4(road a, road b, road c){
     if(c == C && b == B && a == A)
         threeWayConflicts(1);
     else {
@@ -209,7 +208,7 @@ void threeWayOption4(enum road a, enum road b, enum road c){
     return;
 }
 
-void threeWayOption5(enum road a, enum road b, enum road c){
+void threeWayOption5(road a, road b, road c){
     if(c == C && b == B && a == A)
         threeWayConflicts(1);
     else {
@@ -228,7 +227,7 @@ void threeWayOption5(enum road a, enum road b, enum road c){
     return;
 }
 
-void threeWayOption6(enum road a, enum road b, enum road c){
+void threeWayOption6(road a, road b, road c){
     if(c == C && b == B && a == A)
         threeWayConflicts(1);
     else {
@@ -247,7 +246,7 @@ void threeWayOption6(enum road a, enum road b, enum road c){
     return;
 }
 
-void threeWayOption7(enum road a, enum road b, enum road c){
+void threeWayOption7(road a, road b, road c){
     if(a == A)
         outgoingRoads[1] = B;
     if(b == B)
@@ -257,7 +256,7 @@ void threeWayOption7(enum road a, enum road b, enum road c){
     return;
 }
 
-void fourWayOption1(enum road a, enum road b, enum road c, enum road d){
+void fourWayOption1(road a, road b, road c, road d){
     if(a == A)
         outgoingRoads[1] = B;
     if(b == B)
@@ -269,7 +268,7 @@ void fourWayOption1(enum road a, enum road b, enum road c, enum road d){
     return;
 }
 
-void fourWayOption2(enum road a, enum road b, enum road c, enum road d){
+void fourWayOption2(road a, road b, road c, road d){
     if(a == A)
         outgoingRoads[1] = B;
     if(c == C)
@@ -286,7 +285,7 @@ void fourWayOption2(enum road a, enum road b, enum road c, enum road d){
     return;
 }
 
-void fourWayOption3(enum road a, enum road b, enum road c, enum road d){//NOT DONE
+void fourWayOption3(road a, road b, road c, road d){//NOT DONE
     if(a == A)
         outgoingRoads[1] = B;
     if(b == B)
@@ -303,7 +302,7 @@ void fourWayOption3(enum road a, enum road b, enum road c, enum road d){//NOT DO
     return;
 }
 
-void fourWayOption4(enum road a, enum road b, enum road c, enum road d){
+void fourWayOption4(road a, road b, road c, road d){
     if(b == B)
         outgoingRoads[2] = C;
     if(c == C)
@@ -320,7 +319,7 @@ void fourWayOption4(enum road a, enum road b, enum road c, enum road d){
     return;
 }
 
-void fourWayOption5(enum road a, enum road b, enum road c, enum road d){
+void fourWayOption5(road a, road b, road c, road d){
     if(a == A)
         outgoingRoads[1] = B;
     if(c == C)
@@ -337,7 +336,7 @@ void fourWayOption5(enum road a, enum road b, enum road c, enum road d){
     return;
 }
 
-void fourWayOption6(enum road a, enum road b, enum road c, enum road d){
+void fourWayOption6(road a, road b, road c, road d){
     if(a == A)
         outgoingRoads[1] = B;
     if(b == B)
@@ -354,7 +353,7 @@ void fourWayOption6(enum road a, enum road b, enum road c, enum road d){
     return;
 }
 
-void fourWayOption7(enum road a, enum road b, enum road c, enum road d){
+void fourWayOption7(road a, road b, road c, road d){
     if(a == A)
         outgoingRoads[1] = B;
     if(c == C)
@@ -371,7 +370,7 @@ void fourWayOption7(enum road a, enum road b, enum road c, enum road d){
     return;
 }
 
-void fourWayOption8(enum road a, enum road b, enum road c, enum road d){
+void fourWayOption8(road a, road b, road c, road d){
     if(b == B)
         outgoingRoads[2] = C;
     if(c == C)
@@ -388,7 +387,7 @@ void fourWayOption8(enum road a, enum road b, enum road c, enum road d){
     return;
 }
 
-void fourWayOption9(enum road a, enum road b, enum road c, enum road d) {
+void fourWayOption9(road a, road b, road c, road d) {
     if (a == A)
         outgoingRoads[1] = B;
     if (c == C)
@@ -404,9 +403,3 @@ void fourWayOption9(enum road a, enum road b, enum road c, enum road d) {
     }
     return;
 }
-
-
-
-
-
-
