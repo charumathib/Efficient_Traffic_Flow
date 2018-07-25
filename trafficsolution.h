@@ -32,5 +32,5 @@ void fourWayOption8(road a, road b, road c, road d);
 void fourWayOption9(road a, road b, road c, road d);
 
 void threeWayConflicts(int num);
-void initializeVertices();
+void clearOutgoingRoads();
 
