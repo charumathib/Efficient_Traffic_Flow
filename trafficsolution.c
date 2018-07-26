@@ -1,42 +1,29 @@
-//
-// Created by Charumathi Badrinath on 7/23/18.
-//
-
+/* Created by Charumathi Badrinath */
 
 #include <stdio.h>
 #include "trafficsolution.h"
 
-//creates an enum with up to 4 usable road names
+/* Defines the structure which represents road intersections. It consists of 3 fields, namely an array storing the
+ * assigned numbers of incoming roads, another array storing the assigned numbers of outgoing roads, and an integer
+ * which stores the overall number of roads that meet at the given intersection*/
 typedef struct intersection{
-    int incoming[5]; //maximum of 4 roads will be going into each intersection
-    int outgoing[5]; //maximum of 4 roads will be exiting each intersection
-    int numRoads; //stores the number of roads that connect at the intersection
+    int incoming[5];
+    int outgoing[5];
+    int numRoads;
 }intersection;
 
-int conflicts = 0; //measures the number of times cars have to cross paths
+/* Counter variable which is incremented every time a given traffic flow causes cars to either merge or cross paths.
+ * This counter is reset after every cycle of DFS through the implicit tree */
+int conflicts = 0;
 
-road outgoingRoads[5]; //a temporary array that the threeWayIntersection() and fourWayIntersection() methods will be working on
+/* A temporary array that the threeWayIntersection() and fourWayIntersection() methods will be working on. It is
+ * cleared by the clearRoads() function immediately after it's contents have been translated into roadsArray[]*/
+road outgoingRoads[5];
 
-short roadsArray[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0}; //initializes all 38 roads to 0 at the start of the program
+/* Initializes the values of all 19 2-way roads (38 overall) to unused at the start of the program */
+short roadsArray[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
 
-
-//the outgoingRoads array is cleared immediately after the corresponding values are stored in roadsArray
-//the conflicts counter is reset after every completed DFS of the implicit tree and the conflict number for that round
-//is stored
-
-void convertLettersToRoadNames(intersection i){
-    if(outgoingRoads[0] == A)
-        roadsArray[i.outgoing[0]] = 1;
-    if(outgoingRoads[1] == B)
-        roadsArray[i.outgoing[1]] = 1;
-    if(outgoingRoads[2] == C)
-        roadsArray[i.outgoing[2]] = 1;
-    if(outgoingRoads[3] == D)
-        roadsArray[i.outgoing[3]] = 1;
-    clearOutgoingRoads();
-    return;
-}
-
+/* Program driver */
 int main(){
     intersection int1 = {.incoming = {4, 29, 33, 1}, .outgoing = {3, 30, 34, 2}, .numRoads = 4}; //roads are arranged in the order A, B, C, D
     intersection int2 = {.incoming = {27, 32, 34}, .outgoing = {28, 31, 33}, .numRoads = 3};
@@ -51,12 +38,29 @@ int main(){
     return 0;
 }
 
+/* Translates enum values into changes in roadsArray[] based on which intersection is calling it. Based on an
+ * illustration in which all intersections have been numbered and all roads have been numbered and named (A,B,C,D) */
+void convertLettersToRoadNames(intersection i){
+    if(outgoingRoads[0] == A)
+        roadsArray[i.outgoing[0]] = 1;
+    if(outgoingRoads[1] == B)
+        roadsArray[i.outgoing[1]] = 1;
+    if(outgoingRoads[2] == C)
+        roadsArray[i.outgoing[2]] = 1;
+    if(outgoingRoads[3] == D)
+        roadsArray[i.outgoing[3]] = 1;
+    clearOutgoingRoads();
+    return;
+}
+
+/* Utility function which sets all the values in outgoingRoads[] to NO_ROAD signifying a NULL value */
 void clearOutgoingRoads() {
     for (int i = 0; i < sizeof (outgoingRoads); i++) {
         outgoingRoads[i] = NO_ROAD;
     }
 }
 
+/* Caller method which when given three road names and a traffic flow option, calls the corresponding method */
 void threeWayIntersection(road a, road b, road c, short option){
     switch (option){
         case 1:
@@ -84,6 +88,7 @@ void threeWayIntersection(road a, road b, road c, short option){
     }
 }
 
+/* Caller method which when given four road names and a traffic flow option, calls the corresponding method */
 void fourWayIntersection(road a, road b, road c, road d, short option){
     switch(option){
         case 1:
@@ -117,6 +122,9 @@ void fourWayIntersection(road a, road b, road c, road d, short option){
     }
 }
 
+/* When all three entered roads have a value other than NO_ROAD, this method modifies the outgoingRoads[] array with
+ * the appropriate values and increments the conflicts counter by a specified amount depending on the method from which
+ * it is called */
 void threeWayConflicts(int num){
     outgoingRoads[0] = A;
     outgoingRoads[1] = B;
@@ -124,6 +132,7 @@ void threeWayConflicts(int num){
     conflicts += num;
 }
 
+/* Represents the road connections : A-B, B-A, B-C, C-B, and C-A. A-C is left unconnected */
 void threeWayOption1(road a, road b, road c) {
     if (c == C && b == B && a == A)
         threeWayConflicts (2);
@@ -146,6 +155,7 @@ void threeWayOption1(road a, road b, road c) {
     return;
 }
 
+/* Represents the road connections : A-B, B-A, A-C, C-A, and B-C. C-B is left unconnected */
 void threeWayOption2(road a, road b, road c) {
     if (c == C && b == B && a == A)
         threeWayConflicts (2);
@@ -167,6 +177,7 @@ void threeWayOption2(road a, road b, road c) {
     return;
 }
 
+/* Represents the road connections : A-B, A-C, C-A, B-C, and C-B. B-A is left unconnected */
 void threeWayOption3(road a, road b, road c) {
     if (c == C && b == B && a == A)
         threeWayConflicts (2);
@@ -189,6 +200,7 @@ void threeWayOption3(road a, road b, road c) {
     return;
 }
 
+/* Represents the road connections : A-B, C-B, A-C, and C-A. C-B and B-A are left unconnected */
 void threeWayOption4(road a, road b, road c){
     if(c == C && b == B && a == A)
         threeWayConflicts(1);
@@ -208,6 +220,7 @@ void threeWayOption4(road a, road b, road c){
     return;
 }
 
+/* Represents the road connections : A-B, C-B, C-A, and B-C. B-A and A-C are left unconnected */
 void threeWayOption5(road a, road b, road c){
     if(c == C && b == B && a == A)
         threeWayConflicts(1);
@@ -227,6 +240,7 @@ void threeWayOption5(road a, road b, road c){
     return;
 }
 
+/* Represents the road connections : A-B, B-C, B-A, and C-A. C-B and A-C are left unconnected */
 void threeWayOption6(road a, road b, road c){
     if(c == C && b == B && a == A)
         threeWayConflicts(1);
@@ -246,6 +260,7 @@ void threeWayOption6(road a, road b, road c){
     return;
 }
 
+/* Represents the road connections : A-B, B-C, and C-A. C-B, A-C and B-A are left unconnected */
 void threeWayOption7(road a, road b, road c){
     if(a == A)
         outgoingRoads[1] = B;
@@ -256,6 +271,8 @@ void threeWayOption7(road a, road b, road c){
     return;
 }
 
+/* Represents the road connections : B-C, C-D, D-A, and A-B. B-A, C-B, A-C, B-D, C-A, D-B, A-D, and DC are left
+ * unconnected */
 void fourWayOption1(road a, road b, road c, road d){
     if(a == A)
         outgoingRoads[1] = B;
@@ -268,6 +285,8 @@ void fourWayOption1(road a, road b, road c, road d){
     return;
 }
 
+/* Represents the road connections : B-C, C-D, D-A, A-B and B-A. C-B, A-C, B-D, C-A, D-B, A-D, and D-C are left
+ * unconnected */
 void fourWayOption2(road a, road b, road c, road d){
     if(a == A)
         outgoingRoads[1] = B;
@@ -285,6 +304,8 @@ void fourWayOption2(road a, road b, road c, road d){
     return;
 }
 
+/* Represents the road connections : B-C, C-D, D-A, A-B, and C-B. A-C, B-D, C-A, D-B, A-D, D-C, and B-A are left
+ * unconnected */
 void fourWayOption3(road a, road b, road c, road d){//NOT DONE
     if(a == A)
         outgoingRoads[1] = B;
@@ -302,6 +323,8 @@ void fourWayOption3(road a, road b, road c, road d){//NOT DONE
     return;
 }
 
+/* Represents the road connections : B-C, C-D, D-A, A-B, and A-C. B-A, C-B, B-D, C-A, D-B, A-D, and D-C are left
+ * unconnected */
 void fourWayOption4(road a, road b, road c, road d){
     if(b == B)
         outgoingRoads[2] = C;
@@ -319,6 +342,8 @@ void fourWayOption4(road a, road b, road c, road d){
     return;
 }
 
+ /* Represents the road connections : B-C, C-D, D-A, A-B, and B-D. A-C, C-A, D-B, A-D, D-C, B-A, and C-B are left
+  * unconnected */
 void fourWayOption5(road a, road b, road c, road d){
     if(a == A)
         outgoingRoads[1] = B;
@@ -336,6 +361,8 @@ void fourWayOption5(road a, road b, road c, road d){
     return;
 }
 
+ /* Represents the road connections : B-C, C-D, D-A, A-B, and C-A. B-A, C-B, A-C, B-D, D-B, A-D, and D-C are left
+  * unconnected */
 void fourWayOption6(road a, road b, road c, road d){
     if(a == A)
         outgoingRoads[1] = B;
@@ -353,6 +380,8 @@ void fourWayOption6(road a, road b, road c, road d){
     return;
 }
 
+ /* Represents the road connections : B-C, C-D, D-A, A-B, and D-B. B-A, C-B, A-C, B-D, C-A, A-D, and D-C are left
+  * unconnected */
 void fourWayOption7(road a, road b, road c, road d){
     if(a == A)
         outgoingRoads[1] = B;
@@ -370,6 +399,8 @@ void fourWayOption7(road a, road b, road c, road d){
     return;
 }
 
+ /* Represents the road connections : B-C, C-D, D-A, A-B, and A-D. B-A, C-B, A-C, B-D, C-A, D-B, and D-C are left
+  * unconnected */
 void fourWayOption8(road a, road b, road c, road d){
     if(b == B)
         outgoingRoads[2] = C;
@@ -387,6 +418,8 @@ void fourWayOption8(road a, road b, road c, road d){
     return;
 }
 
+ /* Represents the road connections : B-C, C-D, D-A, A-B, and D-C. B-A, C-B, A-C, B-D, C-A, D-B, and A-D are left
+  * unconnected */
 void fourWayOption9(road a, road b, road c, road d) {
     if (a == A)
         outgoingRoads[1] = B;
