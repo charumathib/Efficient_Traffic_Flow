@@ -9,9 +9,12 @@
 
 #endif //LEARNING_C_TRAFFICSOLUTION_H
 
-typedef enum road {A, B, C, D, NO_ROAD}road;
+#define BIDIRECTIONAL 2
+#define NUM_ROADS 19
 
-void threeWayIntersection(road a, road b, road c, short option);
+typedef enum road {NO_ROAD, A, B, C, D}road;
+
+void threeWayIntersection(road a, road b, road c, int option);
 void threeWayOption1(road a, road b, road c);
 void threeWayOption2(road a, road b, road c);
 void threeWayOption3(road a, road b, road c);
@@ -20,7 +23,7 @@ void threeWayOption5(road a, road b, road c);
 void threeWayOption6(road a, road b, road c);
 void threeWayOption7(road a, road b, road c);
 
-void fourWayIntersection(road a, road b, road c, road d, short option);
+void fourWayIntersection(road a, road b, road c, road d, int option);
 void fourWayOption1(road a, road b, road c, road d);
 void fourWayOption2(road a, road b, road c, road d);
 void fourWayOption3(road a, road b, road c, road d);
@@ -33,4 +36,9 @@ void fourWayOption9(road a, road b, road c, road d);
 
 void threeWayConflicts(int num);
 void clearOutgoingRoads();
+void initialiseRoadArray(int noOfRoads, int lanes, short roads[]);
+void traversePaths();
+void reverse();
+void revTraversePaths();
+
 
