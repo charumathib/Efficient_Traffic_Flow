@@ -41,4 +41,8 @@ void traversePaths();
 void reverse();
 void revTraversePaths();
 
+void storeAllVals ();
+
+void traverse ();
+
 

@@ -15,19 +15,16 @@ typedef struct intersection {
     int incoming[5];
     int outgoing[5];
     int numRoads;
-    int alias;
-    int incomingIndex;
+    int connection;
 } intersection;
 
-intersection int1 = {.incoming = {1, 4, 25, 32}, .outgoing = {2, 3, 26,
-                                                              31}, .numRoads = 4, .alias = 0, .incomingIndex = 0};
-intersection int2 = {.incoming = {35, 19, 26}, .outgoing = {36, 20, 25}, .numRoads = 3, .alias = 3, .incomingIndex = 2};
-intersection int3 = {.incoming = {36, 24, 21}, .outgoing = {35, 23, 22}, .numRoads = 3, .alias = 4, .incomingIndex = 0};
-intersection int4 = {.incoming = {17, 20, 22}, .outgoing = {18, 19, 21}, .numRoads = 3, .alias = 5, .incomingIndex = 2};
-intersection int5 = {.incoming = {18, 16, 13, 9}, .outgoing = {17, 15, 14,
-                                                               10}, .numRoads = 4, .alias = 6, .incomingIndex = 0};
-intersection int6 = {.incoming = {5, 11, 14}, .outgoing = {6, 12, 13}, .numRoads = 3, .alias = 7, .incomingIndex = 2};
-intersection int7 = {.incoming = {6, 3, 7}, .outgoing = {5, 4, 8}, .numRoads = 3, .alias = 8, .incomingIndex = 1};
+intersection int1 = {.incoming = {1, 4, 25, 32}, .outgoing = {2, 3, 26, 31}, .numRoads = 4, .connection = 2};
+intersection int2 = {.incoming = {35, 19, 26}, .outgoing = {36, 20, 25}, .numRoads = 3, .connection = 0};
+intersection int3 = {.incoming = {36, 24, 21}, .outgoing = {35, 23, 22}, .numRoads = 3, .connection = 2};
+intersection int4 = {.incoming = {17, 20, 22}, .outgoing = {18, 19, 21}, .numRoads = 3, .connection = 0};
+intersection int5 = {.incoming = {18, 16, 13, 9}, .outgoing = {17, 15, 14, 10}, .numRoads = 4, .connection = 2};
+intersection int6 = {.incoming = {5, 11, 14}, .outgoing = {6, 12, 13}, .numRoads = 3, .connection = 0};
+intersection int7 = {.incoming = {6, 3, 7}, .outgoing = {5, 4, 8}, .numRoads = 3, .connection = 1};
 
 int storage[] = {0, 0, 0, 0, 0, 0, 0};
 

@@ -111,7 +111,7 @@ void threeWayConflicts (int num) {
 
 /* Represents the road connections : A-B, B-A, B-C, C-B, and C-A. A-C is left unconnected */
 
-void threeWayOption1 (road a, road b, road c) { //FUNCTIONAL
+void threeWayOption1 (road a, road b, road c) {
     if (c == C && b == B && a == A)
         threeWayConflicts (2);
     else {
