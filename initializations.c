@@ -54,3 +54,82 @@ void printSolution () {
     puts (" ");
     return;
 }
+
+int optionNumber (intersection i) {
+    switch (i.numRoads) {
+        case 3:
+            return 7;
+        case 4:
+            return 9;
+    }
+    return 0;
+}
+
+intersection convertIntToIntersection (int i) {
+    switch (i) {
+        case 1:
+            return int1;
+        case 2:
+            return int2;
+        case 3:
+            return int3;
+        case 4:
+            return int4;
+        case 5:
+            return int5;
+        case 6:
+            return int6;
+        case 7:
+            return int7;
+        default :
+            return int1;
+    }
+}
+
+road convertConnectionToEnum (intersection i) {
+    switch (i.connection) {
+        case 0:
+            return A;
+        case 1:
+            return B;
+        case 2:
+            return C;
+        default :
+            return NO_ROAD;
+    }
+}
+
+/* Depending on what road connects a specified intersection to it's predecessor, this method executes the appropriate
+ * traffic flow method call */
+void callMethodFromEnum (intersection i, int option) {
+    road rdLetter = convertConnectionToEnum (i);
+    switch (i.numRoads) {
+        case 3:
+            if (roadsArray[i.incoming[i.connection]] != 0) {
+                if (rdLetter == A) {
+                    threeWayIntersection (A, NO_ROAD, NO_ROAD, option);
+                } else if (rdLetter == B) {
+                    threeWayIntersection (NO_ROAD, B, NO_ROAD, option);
+                } else if (rdLetter == C) {
+                    threeWayIntersection (NO_ROAD, NO_ROAD, C, option);
+                }
+            } else {
+                threeWayIntersection (NO_ROAD, NO_ROAD, NO_ROAD, option);
+            }
+            break;
+        case 4:
+            if (roadsArray[i.incoming[i.connection]] != 0) {
+                if (rdLetter == A) {
+                    fourWayIntersection (A, NO_ROAD, NO_ROAD, NO_ROAD, option);
+                } else if (rdLetter == B) {
+                    fourWayIntersection (NO_ROAD, B, NO_ROAD, NO_ROAD, option);
+                } else if (rdLetter == C) {
+                    fourWayIntersection (NO_ROAD, NO_ROAD, C, NO_ROAD, option);
+                }
+            } else {
+                fourWayIntersection (NO_ROAD, NO_ROAD, NO_ROAD, NO_ROAD, option);
+            }
+        default :
+            return;
+    }
+}

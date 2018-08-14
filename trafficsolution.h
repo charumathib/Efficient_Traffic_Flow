@@ -37,12 +37,9 @@ void fourWayOption9(road a, road b, road c, road d);
 void threeWayConflicts(int num);
 void clearOutgoingRoads();
 void initialiseRoadArray(int noOfRoads, int lanes, short roads[]);
-void traversePaths();
-void reverse();
-void revTraversePaths();
 
-void storeAllVals ();
+void traverseStoredVals ();
 
-void traverse ();
+void traverseIntersections (int intersectionNum);
 
 

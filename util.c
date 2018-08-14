@@ -7,6 +7,7 @@
  * cleared by the clearRoads() function immediately after it's contents have been translated into roadsArray[]
 **/
 road outgoingRoads[5] = {0, 0, 0, 0, 0};
+
 /**
  * Counter variable which is incremented every time a given traffic flow causes cars to either merge or cross paths.
  * This counter is reset after every cycle of DFS through the implicit tree
@@ -21,12 +22,6 @@ void printRoads () {
     }
     puts (" ");
     return;
-}
-
-road roadsArrayToLetter (road wanted, int index) {
-    if (roadsArray[index] == 0)
-        return NO_ROAD;
-    return A;
 }
 
 /* Initializes the values of roads (number of roads * number of lanes) to unused at the start of the program */
