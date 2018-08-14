@@ -32,7 +32,7 @@ void traverseIntersections (int intersectionNum) {
 /* Helper method which executes traffic flows at each intersection depending on what has been stored in the storage
  * array. */
 void traverseStoredVals () {
-	threeWayIntersection (NO_ROAD, B, NO_ROAD, storage[6]);
+	threeWayIntersection (NO_ROAD, ROAD, NO_ROAD, storage[6]);
 	convertLettersToRoadNames (int7);
 	for (int i = 5; i >= 0; i--) {
 		intersection curr = convertIntToIntersection (i + 1);

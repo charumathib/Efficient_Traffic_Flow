@@ -3,6 +3,7 @@
 //
 
 #include <stdio.h>
+#include <stdbool.h>
 
 #ifndef LEARNING_C_TRAFFICSOLUTION_H
 #define LEARNING_C_TRAFFICSOLUTION_H
@@ -12,7 +13,9 @@
 #define BIDIRECTIONAL 2
 #define NUM_ROADS 19
 
-typedef enum road {NO_ROAD, A, B, C, D}road;
+typedef enum road {
+    NO_ROAD, ROAD
+} road;
 
 void threeWayIntersection(road a, road b, road c, int option);
 void threeWayOption1(road a, road b, road c);
@@ -41,5 +44,7 @@ void initialiseRoadArray(int noOfRoads, int lanes, short roads[]);
 void traverseStoredVals ();
 
 void traverseIntersections (int intersectionNum);
+
+bool isValidRoad (road r);
 
 

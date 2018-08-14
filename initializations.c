@@ -31,18 +31,11 @@ int storage[] = {0, 0, 0, 0, 0, 0, 0};
 /* Translates enum values into changes in roadsArray[] based on which intersection is calling it. Based on an
  * illustration in which all intersections have been numbered and all roads have been numbered and named (A,B,C,D) */
 
-void convertLettersToRoadNames (intersection i) {
-    if (outgoingRoads[0] == A) {
-        roadsArray[i.outgoing[0]] = 1;
-    }
-    if (outgoingRoads[1] == B) {
-        roadsArray[i.outgoing[1]] = 1;
-    }
-    if (outgoingRoads[2] == C) {
-        roadsArray[i.outgoing[2]] = 1;
-    }
-    if (i.numRoads == 4 && outgoingRoads[3] == D) {
-        roadsArray[i.outgoing[3]] = 1;
+void convertLettersToRoadNames (intersection intersect) {
+    for (int i = 0; i < 4; i++) {
+        if (isValidRoad (outgoingRoads[i])) {
+            roadsArray[intersect.outgoing[i]] = 1;
+        }
     }
     return;
 }
@@ -61,8 +54,9 @@ int optionNumber (intersection i) {
             return 7;
         case 4:
             return 9;
+        default :
+            return 0;
     }
-    return 0;
 }
 
 intersection convertIntToIntersection (int i) {
@@ -86,50 +80,39 @@ intersection convertIntToIntersection (int i) {
     }
 }
 
-road convertConnectionToEnum (intersection i) {
-    switch (i.connection) {
-        case 0:
-            return A;
-        case 1:
-            return B;
-        case 2:
-            return C;
-        default :
-            return NO_ROAD;
-    }
-}
 
 /* Depending on what road connects a specified intersection to it's predecessor, this method executes the appropriate
  * traffic flow method call */
 void callMethodFromEnum (intersection i, int option) {
-    road rdLetter = convertConnectionToEnum (i);
-    switch (i.numRoads) {
-        case 3:
-            if (roadsArray[i.incoming[i.connection]] != 0) {
-                if (rdLetter == A) {
-                    threeWayIntersection (A, NO_ROAD, NO_ROAD, option);
-                } else if (rdLetter == B) {
-                    threeWayIntersection (NO_ROAD, B, NO_ROAD, option);
-                } else if (rdLetter == C) {
-                    threeWayIntersection (NO_ROAD, NO_ROAD, C, option);
-                }
-            } else {
+    if (i.numRoads == 3 && roadsArray[i.incoming[i.connection]] != 0) {
+        switch (i.connection) {
+            case 0:
+                threeWayIntersection (ROAD, NO_ROAD, NO_ROAD, option);
+                return;
+            case 1:
+                threeWayIntersection (NO_ROAD, ROAD, NO_ROAD, option);
+                return;
+            case 2:
+                threeWayIntersection (NO_ROAD, NO_ROAD, ROAD, option);
+                return;
+            default:
                 threeWayIntersection (NO_ROAD, NO_ROAD, NO_ROAD, option);
-            }
-            break;
-        case 4:
-            if (roadsArray[i.incoming[i.connection]] != 0) {
-                if (rdLetter == A) {
-                    fourWayIntersection (A, NO_ROAD, NO_ROAD, NO_ROAD, option);
-                } else if (rdLetter == B) {
-                    fourWayIntersection (NO_ROAD, B, NO_ROAD, NO_ROAD, option);
-                } else if (rdLetter == C) {
-                    fourWayIntersection (NO_ROAD, NO_ROAD, C, NO_ROAD, option);
-                }
-            } else {
+
+        }
+    }
+    if (i.numRoads == 4 && roadsArray[i.incoming[i.connection]] != 0) {
+        switch (i.connection) {
+            case 0:
+                fourWayIntersection (ROAD, NO_ROAD, NO_ROAD, NO_ROAD, option);
+                return;
+            case 1:
+                fourWayIntersection (NO_ROAD, ROAD, NO_ROAD, NO_ROAD, option);
+                return;
+            case 2:
+                fourWayIntersection (NO_ROAD, NO_ROAD, ROAD, NO_ROAD, option);
+                return;
+            default :
                 fourWayIntersection (NO_ROAD, NO_ROAD, NO_ROAD, NO_ROAD, option);
-            }
-        default :
-            return;
+        }
     }
 }
